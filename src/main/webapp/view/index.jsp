@@ -93,7 +93,21 @@
 
 
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+              <%
+              String email=(String) session.getAttribute("email");
+              if(email!=null){
+            	  
+            	  %>
+                  <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><%= email%><span aria-hidden="true">&rarr;</span></a>
+                  <span><%= session.getAttribute("id") %></span>
+                  <a href="#" onclick="signout()" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Signout</a>
+                  <%
+              }else{
+            	  %>
+            	                <a href="/user/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>            	 
+            	  <%
+              }
+              %>
             </div>
           </nav>
           <!-- Mobile menu, show/hide based on menu open state. -->
@@ -121,7 +135,7 @@
                     <a href="#contact" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact</a>                
                   </div>
                   <div class="py-6">
-                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+                    <a href="/user/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
                   </div>
                 </div>
               </div>
@@ -255,6 +269,30 @@
             offset: 200, // Adjust the offset as needed
             duration: 800, // Set the duration of the animation
         });
+
+
+    function signout(){
+    // Make a GET request to sign out the user
+        fetch('/user/signout', {
+            method: 'GET',
+            credentials: 'same-origin' // Include cookies in the request if any
+        })
+        .then(response => response.text())
+                .then(data => {
+                    if(data=="success"){
+                      console.log('Success:', data);
+                      alert('Successfully Signed out.', data);
+                        window.location.reload();
+                    }else{
+                        console.log('Signout in Failed:', data);
+                        alert('Signout Failed: '+data);
+                    }
+                })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+        
     </script>
 
 </body>

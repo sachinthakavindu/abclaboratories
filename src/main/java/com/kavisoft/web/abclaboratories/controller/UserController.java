@@ -6,12 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/")
 public class UserController {
 
-	@GetMapping("/register")
+	@GetMapping("register")
 	public String loadRegister() {
 		return "register";
 	}
+	
+	@GetMapping("login")
+	public String getMethodName() {
+		return "login";
+	}	
 	
 }

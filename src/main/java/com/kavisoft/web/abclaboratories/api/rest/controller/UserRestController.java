@@ -1,4 +1,4 @@
-package com.kavisoft.web.abclaboratories.api;
+package com.kavisoft.web.abclaboratories.api.rest.controller;
 
 import java.util.Optional;
 
@@ -14,20 +14,48 @@ import com.kavisoft.web.abclaboratories.dto.UserDTO;
 import com.kavisoft.web.abclaboratories.model.User;
 import com.kavisoft.web.abclaboratories.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/")
 public class UserRestController {
 	@Autowired
-	private UserService service;	
-	
-	@GetMapping("/{id}")
+	private UserService service;
+
+	@GetMapping("{id}")
 	public Optional<User> getPatientById(@PathVariable("id") int id) {
 		return service.getUserById(id);
 	}
-	
-	@PostMapping("/register")
+
+	@PostMapping("register")
 	public User registerUser(@RequestBody User user) {
 		return service.register(user);
-	}	
+	}
+
+	@PostMapping("login")
+	public String login(@RequestBody User user, HttpSession session) {
+		// TODO: process POST request
+		if (service.authenticate(user.getEmail(), user.getPassword())) {
+			User userData = service.getUserByEmail(user.getEmail());
+			
+			// Set a session attribute
+			session.setAttribute("email", user.getEmail());
+			session.setAttribute("id", userData.getId());
+
+			System.out.println("Done");
+
+			return "success";
+		} else {
+			System.out.println("Failed");
+
+			return "Invalid email or password";
+		}
+
+	}
 	
+	@GetMapping("signout")
+	public String signout(HttpSession session) {
+		return service.signOut(session);
+	}	
+
 }
