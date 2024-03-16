@@ -3,6 +3,7 @@ package com.kavisoft.web.abclaboratories.api.rest.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kavisoft.web.abclaboratories.dto.UserDTO;
+import com.kavisoft.web.abclaboratories.dto.UserRegDTO;
 import com.kavisoft.web.abclaboratories.model.User;
 import com.kavisoft.web.abclaboratories.service.UserService;
 
@@ -28,7 +30,7 @@ public class UserRestController {
 	}
 
 	@PostMapping("register")
-	public User registerUser(@RequestBody User user) {
+	public ResponseEntity<UserRegDTO> registerUser(@RequestBody User user) {
 		return service.register(user);
 	}
 

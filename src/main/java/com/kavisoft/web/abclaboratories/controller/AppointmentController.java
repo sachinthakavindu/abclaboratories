@@ -21,7 +21,7 @@ public class AppointmentController {
 				return "appointment";
 			}
 		}catch(Exception e) {
-			e.printStackTrace();
+			System.out.println("Redirected to login.");
 		}				
 		return "login";
 	}

@@ -216,8 +216,14 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        alert("Successfully Registered. Your Patient ID is " + data.id + ". " + data.message);
+                        if(data.message=="success"){
+                            alert("Successfully Registered. Your Patient ID is " + data.id + ".");
                         console.log(data);
+                        }else {
+                            alert("Registration failed: " + data.message);
+                        console.log(data);
+                        }
+              
                     })
                     .catch(error => {
                         console.error('Error:', error);

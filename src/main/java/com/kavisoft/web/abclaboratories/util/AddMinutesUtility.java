@@ -7,7 +7,6 @@ import java.util.Calendar;
 public class AddMinutesUtility {
     private static AddMinutesUtility instance;
 
-    // Private constructor to prevent instantiation
     private AddMinutesUtility() {
     }
 
