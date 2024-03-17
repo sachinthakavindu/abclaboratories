@@ -121,7 +121,7 @@
         <br />
         <h1 class="text-4xl text-primary text-center mt-4">ABC Laboratories</h1>
 
-        <h1 class="text-2xl text-center">Blood Test Medical Report</h1>
+        <h1 class="text-2xl text-center"><%=testName %> Medical Report</h1>
         <br />
         <h2 class="text-lg">Patient Information</h2>
         <p><strong>Patient Name:</strong> <%=dto.getName() %></p>

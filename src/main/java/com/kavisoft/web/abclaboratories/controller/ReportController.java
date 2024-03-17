@@ -45,8 +45,6 @@ public class ReportController {
 
 		model.addAttribute("data", reportData);
 		
-		System.out.println(reportData);
-
 		return "report";
 	}
 

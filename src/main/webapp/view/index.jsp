@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.kavisoft.web.abclaboratories.model.Branch"%>
+<%@page import="java.util.List"%>
 <html lang="en">
 
 <head>
@@ -216,28 +218,22 @@
     </section>
 
     <!-- Branches Section -->
-    <section id="branches" class="section card-3" data-aos="fade-up">
+    <section id="branches" class="section card-3" data-aos="fade-up" style="height: max-content;padding: 30px;">
         <div class="container">
             <h2 class="has-text-centered text-2xl mb-4 text-gray- has-text-weight-bold">Island-Wide Excellence: Your Premier Healthcare Choice.</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <% // Access the list of appointments from the model
+																		List<Branch> branches = (List<Branch>) request.getAttribute("branches");
+																			
+																			for (Branch branch : branches) {
+																			%>
+                
                 <div>
-                    <p class="text-xl font-bold">Colombo Branch</p>
-                    <p>Address: 123 Main Street, Colombo</p>
+                    <p class="text-xl font-bold"><%=branch.getCity() %> Branch</p>
+                    <p><%=branch.getAddress() %></p>
                 </div>
-                <div>
-                    <p class="text-xl font-bold">Kandy Branch</p>
-                    <p>Address: 456 Central Road, Kandy</p>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-                <div>
-                    <p class="text-xl font-bold">Galle Branch</p>
-                    <p>Address: 789 Seaside Avenue, Galle</p>
-                </div>
-                <div>
-                    <p class="text-xl font-bold">Jaffna Branch</p>
-                    <p>Address: 101 Northern Street, Jaffna</p>
-                </div>
+                
+                <%} %>
             </div>
         </div>
     </section>
