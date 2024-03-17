@@ -1,6 +1,7 @@
 package com.kavisoft.web.abclaboratories.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,18 @@ import jakarta.servlet.http.HttpSession;
 @Service
 public class UserService {
 	@Autowired
-	private UserRepository repo;
+	private UserRepository repository;
 	@Autowired
 	private EntityManager entityManager;
 	@Autowired
 	EmailService emailService;
 
 	public Optional<User> getUserById(int id) {
-		return repo.findById(id);
+		return repository.findById(id);
+	}
+	
+	public List<User> getAllUsers(){
+		return repository.findAll();
 	}
 
 	public User getUserByEmail(String email) {
@@ -55,7 +60,7 @@ public class UserService {
 			return ResponseEntity.status(HttpStatus.OK).body(regDTO);
 		} else {
 
-			User savedUser = repo.save(user);
+			User savedUser = repository.save(user);
 
 			String title = null;
 			Gender gender = savedUser.getGender();

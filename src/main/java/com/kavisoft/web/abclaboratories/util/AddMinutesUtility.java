@@ -10,7 +10,7 @@ public class AddMinutesUtility {
     private AddMinutesUtility() {
     }
 
-    // Method to get the singleton instance
+    // to get the singleton instance
     public static AddMinutesUtility getInstance() {
         if (instance == null) {
             instance = new AddMinutesUtility();
@@ -18,7 +18,7 @@ public class AddMinutesUtility {
         return instance;
     }
 
-    // Method to add minutes to a given time
+    // to add minutes to a given time
     public Time addMinutesToTime(Time time, int minutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(time);

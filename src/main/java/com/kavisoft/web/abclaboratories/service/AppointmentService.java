@@ -2,12 +2,15 @@ package com.kavisoft.web.abclaboratories.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kavisoft.web.abclaboratories.dto.AllAppointmentsDTO;
 import com.kavisoft.web.abclaboratories.dto.AppointmentDTO;
 import com.kavisoft.web.abclaboratories.enums.Gender;
 import com.kavisoft.web.abclaboratories.model.Appointment;
@@ -128,5 +131,60 @@ public class AppointmentService {
 		dto.setType((String) result[4]);
 
 		return dto;
+	}
+	
+	public ArrayList<AllAppointmentsDTO> getAllAppointments() {
+
+		String sqlQuery = "SELECT a.`id`,b.`city`,u.id AS `patient_id`,u.`first_name`,u.`last_name`,t.`name` AS `type`,a.`report_id`,a.`date`,a.`time`,t.`id` AS `type_id`   FROM `appointment` a INNER JOIN `test_type` t ON a.`test_type_id`=t.`id` INNER JOIN `branch` b ON a.`branch_id`=b.`id` INNER JOIN `user` u ON a.`patient_id`=u.`id`\n"
+				+ "";
+		Query query = entityManager.createNativeQuery(sqlQuery);
+		List<Object[]> resultList = query.getResultList();
+		
+		ArrayList<AllAppointmentsDTO> allAppointmentsDTOs=new ArrayList<>();
+
+		for (Object[] result : resultList) {
+			int id = (int) result[0];
+			String city = (String) result[1];
+			int patientId = Integer.valueOf(String.valueOf(result[2]));
+			String firstName = (String) result[3];
+			String lastName = (String) result[4];
+			String type = (String) result[5];
+			int reportId = (int) result[6];
+			String date = result[7].toString(); // Assuming date is a Date object
+			String time = result[8].toString(); // Assuming time is a Time object
+			int typeId=(int) result[9];
+
+			AllAppointmentsDTO appointmentsDTO=new AllAppointmentsDTO();
+			appointmentsDTO.setId(id);
+			appointmentsDTO.setCity(city);
+			appointmentsDTO.setPatientId(patientId);
+			appointmentsDTO.setFirstName(firstName);
+			appointmentsDTO.setLastName(lastName);
+			appointmentsDTO.setType(type);
+			appointmentsDTO.setReportId(reportId);
+			appointmentsDTO.setDate(date);
+			appointmentsDTO.setTime(time);
+			appointmentsDTO.setTypeId(typeId);
+			
+			allAppointmentsDTOs.add(appointmentsDTO);
+
+		}
+		
+		return allAppointmentsDTOs;
+
+	}
+	
+	public Appointment updateAppointmentReportId(Appointment appointment) {
+		
+		Optional<Appointment> existingAppointment = repository.findById(appointment.getId());
+		
+		if(existingAppointment.isPresent()) {
+			Appointment oldAppointment= existingAppointment.get();
+			oldAppointment.setReportId(appointment.getReportId());
+			
+			return repository.save(oldAppointment);
+		}
+		
+		return new Appointment();
 	}
 }

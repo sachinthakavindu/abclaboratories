@@ -5,17 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kavisoft.web.abclaboratories.model.Branch;
-import com.kavisoft.web.abclaboratories.repository.BranchRepository;
+import com.kavisoft.web.abclaboratories.model.Doctor;
+import com.kavisoft.web.abclaboratories.repository.DoctorRepository;
 
 @Service
-public class BranchService {
+public class DoctorService {
 	@Autowired
-	private BranchRepository repository;
+	DoctorRepository repository;
 
-	public List<Branch> getAllBranches() {
-		
+	public List<Doctor> getAllDoctors(){
 		return repository.findAll();
 	}
-	
 }

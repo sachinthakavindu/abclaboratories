@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@page import="com.kavisoft.web.abclaboratories.model.Branch"%>
+<%@page import="com.kavisoft.web.abclaboratories.model.TestType"%>
+<%@page import="java.util.List"%>
 <html lang="en">
 
 <head>
@@ -61,9 +64,13 @@
                             <select id="testType" name="testType"
                                 class="block w-full px-4 py-2 mt-1 text-sm border-gray-300 rounded-lg focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="">Select</option>
-                                <option value="1">Blood Test</option>
-                                <option value="2">Urinalysis</option>
-                                <option value="3">Cholesterol Test</option>
+                                           <% // Access the list of types from the model
+																		List<TestType> types = (List<TestType>) request.getAttribute("types");
+																			
+																			for (TestType type : types) {
+																			%>
+                                <option value="<%=type.getId()%>"><%=type.getName() %></option>
+                                <%} %>
                                 <!-- Add more test types here -->
                             </select>
                         </div>
@@ -84,10 +91,13 @@
                             <select id="nearestBranch" name="nearestBranch"
                                 class="block w-full px-4 py-2 mt-1 text-sm border-gray-300 rounded-lg focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="">Select</option>
-                                <option value="1">Colombo Branch</option>
-                                <option value="2">Kandy Branch</option>
-                                <option value="3">Galle Branch</option>
-                                <option value="4">Jaffna Branch</option>
+                                                                           <% // Access the list of appointments from the model
+																		List<Branch> branches = (List<Branch>) request.getAttribute("branches");
+																			
+																			for (Branch branch : branches) {
+																			%>
+                                <option value="<%=branch.getId()%>"><%=branch.getCity()%></option>
+                                <%} %>
                                 <!-- Add more branches here -->
                             </select>
                         </div>
